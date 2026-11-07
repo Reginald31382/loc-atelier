@@ -34,7 +34,7 @@ export default function About() {
             </p>
           </div>
 
-          <p className="mt-5 text-[8px] tracking-[0.2em] text-[#D4B18A] sm:text-[9px] sm:tracking-[0.25em]">
+          <p className="relative z-10 mt-6 inline-block bg-[#211D19]/90 px-3 py-2 text-[8px] tracking-[0.2em] text-[#D4B18A] sm:mt-7 sm:text-[9px] sm:tracking-[0.25em]">
             A PHILOSOPHY OF BEAUTY & INTENTION
           </p>
         </div>
