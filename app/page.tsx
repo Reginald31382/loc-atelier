@@ -12,7 +12,7 @@ import ExperienceBanner from "@/components/home/ExperienceBanner";
 
 export default function Home() {
   return (
-    <main className="overflow-hidden">
+    <main className="relative">
       <Navbar />
 
       {/* HERO */}

@@ -29,7 +29,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#C6A66B]/25 bg-[#211D19]/95 shadow-lg shadow-black/10 backdrop-blur-xl">
+    <header className="sticky top-0 z-[100] w-full border-b border-[#C6A66B]/25 bg-[#211D19]/95 shadow-lg shadow-black/10 backdrop-blur-xl">
       <nav className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-5 py-4 sm:px-8 md:px-12 lg:py-5">
         {/* BRAND */}
         <button

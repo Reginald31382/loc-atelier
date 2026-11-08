@@ -36,7 +36,7 @@ const timeSlots = [
 ];
 
 const inputStyle =
-  "w-full border border-[#d8d0c3] bg-white px-4 py-3 text-sm text-[#211D19] outline-none transition focus:border-[#c6a66b]";
+  "w-full border border-[#B89A70]/40 bg-[#F1EBDD] px-4 py-3 text-sm text-[#211D19] placeholder:text-[#82796E]/70 outline-none transition focus:border-[#B89A70] focus:ring-1 focus:ring-[#B89A70]/30";
 
 type ClientDetails = {
   name: string;
@@ -108,15 +108,17 @@ export default function BookingWizard() {
     setConfirmed(true);
   };
 
+  const stepLabels = ["Service", "Schedule", "Details", "Review"];
+
   if (confirmed) {
     return (
-      <section className="flex min-h-screen items-center justify-center px-6 py-20">
-        <div className="w-full max-w-xl border border-[#d8d0c3] bg-white p-8 text-center shadow-sm md:p-14">
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#F1EBDD]/70 backdrop-blur-sm">
-            <CheckCircle2 size={34} className="text-[#c6a66b]" />
+      <section className="flex min-h-screen items-center justify-center px-5 py-20">
+        <div className="w-full max-w-xl border border-[#B89A70]/40 bg-[#F1EBDD] p-8 text-center shadow-2xl shadow-black/20 md:p-14">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#B89A70]/40 bg-[#211D19]">
+            <CheckCircle2 size={34} className="text-[#C6A66B]" />
           </div>
 
-          <p className="mb-3 text-xs tracking-[0.35em] text-[#c6a66b]">
+          <p className="mb-3 text-xs tracking-[0.35em] text-[#A87963]">
             THE LOC ATELIER
           </p>
 
@@ -124,31 +126,33 @@ export default function BookingWizard() {
             Request Received
           </h1>
 
-          <p className="mb-8 text-sm leading-7 text-[#777066]">
+          <p className="mb-8 text-sm leading-7 text-[#82796E]">
             Thank you, {details.name}. Your appointment request has been
             completed in this demo. No appointment has actually been submitted
             or reserved.
           </p>
 
-          <div className="mb-8 bg-[#F1EBDD]/70 backdrop-blur-sm p-6 text-left">
-            <p className="mb-3 text-xs tracking-[0.2em] text-[#82796E]">
+          <div className="mb-8 border border-[#B89A70]/30 bg-white/40 p-6 text-left">
+            <p className="mb-4 text-[10px] tracking-[0.25em] text-[#A87963]">
               APPOINTMENT SUMMARY
             </p>
 
-            <p className="mb-2 font-serif text-xl">{selectedService?.name}</p>
+            <p className="mb-2 font-serif text-xl text-[#211D19]">
+              {selectedService?.name}
+            </p>
 
-            <p className="mb-2 text-sm text-[#777066]">
+            <p className="mb-2 text-sm text-[#82796E]">
               {date} at {time}
             </p>
 
-            <p className="text-sm text-[#777066]">
+            <p className="text-sm text-[#82796E]">
               Starting at ${selectedService?.price}
             </p>
           </div>
 
           <Link
             href="/"
-            className="inline-flex items-center justify-center bg-[#211D19] px-8 py-4 text-xs tracking-[0.2em] text-white transition hover:bg-[#c6a66b]"
+            className="inline-flex items-center justify-center bg-[#211D19] px-8 py-4 text-xs tracking-[0.2em] text-[#F1EBDD] transition hover:bg-[#A87963]"
           >
             RETURN HOME
           </Link>
@@ -158,38 +162,41 @@ export default function BookingWizard() {
   }
 
   return (
-    <section className="min-h-screen px-5 pb-20 pt-32 md:px-8">
+    <section className="min-h-screen px-5 pb-20 pt-24 md:px-8 md:pt-32">
       <div className="mx-auto max-w-4xl">
+        {/* INTRODUCTION */}
         <div className="mb-12 text-center">
-          <p className="mb-3 text-xs tracking-[0.4em] text-[#c6a66b]">
+          <p className="mb-3 text-[10px] tracking-[0.4em] text-[#C6A66B]">
             THE LOC ATELIER
           </p>
 
-          <h1 className="mb-4 font-serif text-5xl text-[#211D19] md:text-6xl">
+          <h1 className="mb-4 font-serif text-5xl text-[#F1EBDD] md:text-6xl">
             Book Your Experience
           </h1>
 
-          <p className="text-sm text-[#777066]">
+          <p className="text-sm leading-7 text-[#C6B9A7]">
             Your journey to elevated loc care begins here.
           </p>
+
+          <div className="mx-auto mt-7 h-px w-20 bg-[#B89A70]" />
         </div>
 
-        {/* Progress */}
-        <div className="mb-12 grid grid-cols-4 gap-2">
-          {["Service", "Schedule", "Details", "Review"].map((label, index) => {
+        {/* PROGRESS INDICATOR */}
+        <div className="mb-12 grid grid-cols-4 gap-3">
+          {stepLabels.map((label, index) => {
             const number = index + 1;
             const active = step >= number;
 
             return (
               <div key={label}>
                 <div
-                  className={`mb-3 h-1 ${
-                    active ? "bg-[#c6a66b]" : "bg-[#ded8ce]"
+                  className={`mb-3 h-[3px] transition-colors ${
+                    active ? "bg-[#C6A66B]" : "bg-[#82796E]/40"
                   }`}
                 />
                 <p
-                  className={`text-center text-[10px] tracking-[0.12em] md:text-xs ${
-                    active ? "text-[#211D19]" : "text-[#aaa397]"
+                  className={`text-center text-[9px] tracking-[0.12em] sm:text-[10px] md:text-xs ${
+                    active ? "text-[#F1EBDD]" : "text-[#82796E]"
                   }`}
                 >
                   {label.toUpperCase()}
@@ -199,13 +206,18 @@ export default function BookingWizard() {
           })}
         </div>
 
-        <div className="border border-[#ded8ce] bg-white p-6 shadow-sm md:p-10">
+        {/* BOOKING PANEL */}
+        <div className="border border-[#B89A70]/40 bg-[#F1EBDD] p-6 shadow-2xl shadow-black/20 md:p-10">
           {/* STEP 1: SERVICE */}
           {step === 1 && (
             <div>
               <div className="mb-8">
-                <Scissors className="mb-4 text-[#c6a66b]" size={25} />
-                <h2 className="font-serif text-3xl">Select Your Service</h2>
+                <Scissors className="mb-4 text-[#A87963]" size={25} />
+
+                <h2 className="font-serif text-3xl text-[#211D19]">
+                  Select Your Service
+                </h2>
+
                 <p className="mt-2 text-sm text-[#82796E]">
                   Choose the experience that best fits your loc care needs.
                 </p>
@@ -220,10 +232,11 @@ export default function BookingWizard() {
                       type="button"
                       key={service.id}
                       onClick={() => setServiceId(service.id)}
-                      className={`border p-5 text-left transition ${
+                      aria-pressed={selected}
+                      className={`border p-5 text-left transition duration-300 ${
                         selected
-                          ? "border-[#c6a66b] bg-[#faf7f1]"
-                          : "border-[#ded8ce] hover:border-[#c6a66b]"
+                          ? "border-[#A87963] bg-[#211D19] text-[#F1EBDD] shadow-lg"
+                          : "border-[#B89A70]/40 bg-white/40 text-[#211D19] hover:border-[#A87963] hover:bg-white/70"
                       }`}
                     >
                       <div className="flex items-start justify-between gap-4">
@@ -231,18 +244,27 @@ export default function BookingWizard() {
                           <h3 className="mb-2 font-serif text-xl">
                             {service.name}
                           </h3>
-                          <p className="text-xs text-[#82796E]">
+
+                          <p
+                            className={`text-xs ${
+                              selected ? "text-[#C6B9A7]" : "text-[#82796E]"
+                            }`}
+                          >
                             {service.duration}
                           </p>
                         </div>
 
-                        <span className="text-sm font-medium">
+                        <span
+                          className={`text-sm font-medium ${
+                            selected ? "text-[#C6A66B]" : "text-[#A87963]"
+                          }`}
+                        >
                           ${service.price}+
                         </span>
                       </div>
 
                       {selected && (
-                        <p className="mt-4 text-[10px] tracking-[0.2em] text-[#a17c3e]">
+                        <p className="mt-4 text-[10px] tracking-[0.2em] text-[#C6A66B]">
                           SELECTED
                         </p>
                       )}
@@ -257,14 +279,18 @@ export default function BookingWizard() {
           {step === 2 && (
             <div>
               <div className="mb-8">
-                <CalendarDays className="mb-4 text-[#c6a66b]" size={25} />
-                <h2 className="font-serif text-3xl">Choose Your Appointment</h2>
+                <CalendarDays className="mb-4 text-[#A87963]" size={25} />
+
+                <h2 className="font-serif text-3xl text-[#211D19]">
+                  Choose Your Appointment
+                </h2>
+
                 <p className="mt-2 text-sm text-[#82796E]">
                   Select your preferred date and time.
                 </p>
               </div>
 
-              <label className="mb-3 block text-xs tracking-[0.15em]">
+              <label className="mb-3 block text-[10px] tracking-[0.2em] text-[#211D19]">
                 PREFERRED DATE
               </label>
 
@@ -280,14 +306,15 @@ export default function BookingWizard() {
               />
 
               <div className="mb-4 flex items-center gap-2">
-                <Clock size={18} className="text-[#c6a66b]" />
-                <h3 className="text-xs tracking-[0.15em]">
+                <Clock size={18} className="text-[#A87963]" />
+
+                <h3 className="text-[10px] tracking-[0.2em] text-[#211D19]">
                   AVAILABLE TIME OPTIONS
                 </h3>
               </div>
 
               {!date ? (
-                <p className="bg-[#F1EBDD]/70 backdrop-blur-sm p-5 text-sm text-[#777066]">
+                <p className="border border-[#B89A70]/30 bg-white/40 p-5 text-sm text-[#82796E]">
                   Please select a date to view the sample time options.
                 </p>
               ) : (
@@ -297,10 +324,11 @@ export default function BookingWizard() {
                       type="button"
                       key={slot}
                       onClick={() => setTime(slot)}
+                      aria-pressed={time === slot}
                       className={`border px-4 py-4 text-sm transition ${
                         time === slot
-                          ? "border-[#c6a66b] bg-[#F1EBDD]/70 backdrop-blur-sm"
-                          : "border-[#ded8ce] hover:border-[#c6a66b]"
+                          ? "border-[#211D19] bg-[#211D19] text-[#F1EBDD]"
+                          : "border-[#B89A70]/40 bg-white/40 text-[#211D19] hover:border-[#A87963] hover:bg-white/70"
                       }`}
                     >
                       {slot}
@@ -309,7 +337,7 @@ export default function BookingWizard() {
                 </div>
               )}
 
-              <p className="mt-5 text-xs leading-6 text-[#9a9388]">
+              <p className="mt-5 text-xs leading-6 text-[#82796E]">
                 These are sample time options for the website demo, not live
                 appointment availability.
               </p>
@@ -320,8 +348,12 @@ export default function BookingWizard() {
           {step === 3 && (
             <div>
               <div className="mb-8">
-                <Sparkles className="mb-4 text-[#c6a66b]" size={25} />
-                <h2 className="font-serif text-3xl">Your Information</h2>
+                <Sparkles className="mb-4 text-[#A87963]" size={25} />
+
+                <h2 className="font-serif text-3xl text-[#211D19]">
+                  Your Information
+                </h2>
+
                 <p className="mt-2 text-sm text-[#82796E]">
                   Tell us a little about yourself.
                 </p>
@@ -329,9 +361,10 @@ export default function BookingWizard() {
 
               <div className="space-y-5">
                 <div>
-                  <label className="mb-2 block text-xs tracking-[0.15em]">
+                  <label className="mb-2 block text-[10px] tracking-[0.2em] text-[#211D19]">
                     FULL NAME *
                   </label>
+
                   <input
                     type="text"
                     value={details.name}
@@ -345,9 +378,10 @@ export default function BookingWizard() {
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-xs tracking-[0.15em]">
+                  <label className="mb-2 block text-[10px] tracking-[0.2em] text-[#211D19]">
                     EMAIL ADDRESS *
                   </label>
+
                   <input
                     type="email"
                     value={details.email}
@@ -361,9 +395,10 @@ export default function BookingWizard() {
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-xs tracking-[0.15em]">
+                  <label className="mb-2 block text-[10px] tracking-[0.2em] text-[#211D19]">
                     PHONE NUMBER *
                   </label>
+
                   <input
                     type="tel"
                     value={details.phone}
@@ -377,9 +412,10 @@ export default function BookingWizard() {
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-xs tracking-[0.15em]">
+                  <label className="mb-2 block text-[10px] tracking-[0.2em] text-[#211D19]">
                     ADDITIONAL NOTES
                   </label>
+
                   <textarea
                     rows={4}
                     value={details.notes}
@@ -398,53 +434,64 @@ export default function BookingWizard() {
           {step === 4 && (
             <div>
               <div className="mb-8">
-                <CheckCircle2 className="mb-4 text-[#c6a66b]" size={26} />
-                <h2 className="font-serif text-3xl">Review Your Request</h2>
+                <CheckCircle2 className="mb-4 text-[#A87963]" size={26} />
+
+                <h2 className="font-serif text-3xl text-[#211D19]">
+                  Review Your Request
+                </h2>
+
                 <p className="mt-2 text-sm text-[#82796E]">
                   Make sure everything looks correct before submitting.
                 </p>
               </div>
 
-              <div className="space-y-5 bg-[#F1EBDD]/70 backdrop-blur-sm p-6">
+              <div className="space-y-5 border border-[#B89A70]/30 bg-white/40 p-6">
                 <div>
-                  <p className="mb-1 text-[10px] tracking-[0.2em] text-[#82796E]">
+                  <p className="mb-1 text-[10px] tracking-[0.2em] text-[#A87963]">
                     SERVICE
                   </p>
-                  <p className="font-serif text-xl">{selectedService?.name}</p>
+
+                  <p className="font-serif text-xl text-[#211D19]">
+                    {selectedService?.name}
+                  </p>
                 </div>
 
                 <div>
-                  <p className="mb-1 text-[10px] tracking-[0.2em] text-[#82796E]">
+                  <p className="mb-1 text-[10px] tracking-[0.2em] text-[#A87963]">
                     DATE & TIME
                   </p>
-                  <p className="text-sm">
+
+                  <p className="text-sm text-[#211D19]">
                     {date} at {time}
                   </p>
                 </div>
 
                 <div>
-                  <p className="mb-1 text-[10px] tracking-[0.2em] text-[#82796E]">
+                  <p className="mb-1 text-[10px] tracking-[0.2em] text-[#A87963]">
                     CLIENT
                   </p>
-                  <p className="text-sm">{details.name}</p>
-                  <p className="text-sm">{details.email}</p>
-                  <p className="text-sm">{details.phone}</p>
+
+                  <p className="text-sm text-[#211D19]">{details.name}</p>
+                  <p className="text-sm text-[#82796E]">{details.email}</p>
+                  <p className="text-sm text-[#82796E]">{details.phone}</p>
                 </div>
 
                 {details.notes && (
                   <div>
-                    <p className="mb-1 text-[10px] tracking-[0.2em] text-[#82796E]">
+                    <p className="mb-1 text-[10px] tracking-[0.2em] text-[#A87963]">
                       NOTES
                     </p>
-                    <p className="text-sm">{details.notes}</p>
+
+                    <p className="text-sm text-[#211D19]">{details.notes}</p>
                   </div>
                 )}
 
-                <div className="border-t border-[#d8d0c3] pt-5">
-                  <p className="mb-1 text-[10px] tracking-[0.2em] text-[#82796E]">
+                <div className="border-t border-[#B89A70]/40 pt-5">
+                  <p className="mb-1 text-[10px] tracking-[0.2em] text-[#A87963]">
                     ESTIMATED STARTING PRICE
                   </p>
-                  <p className="font-serif text-2xl">
+
+                  <p className="font-serif text-2xl text-[#211D19]">
                     ${selectedService?.price}+
                   </p>
                 </div>
@@ -458,12 +505,12 @@ export default function BookingWizard() {
           )}
 
           {/* NAVIGATION */}
-          <div className="mt-10 flex items-center justify-between border-t border-[#ded8ce] pt-7">
+          <div className="mt-10 flex items-center justify-between border-t border-[#B89A70]/40 pt-7">
             {step > 1 ? (
               <button
                 type="button"
                 onClick={previousStep}
-                className="flex items-center gap-2 text-xs tracking-[0.15em] text-[#777066] hover:text-[#c6a66b]"
+                className="flex items-center gap-2 text-xs tracking-[0.15em] text-[#82796E] transition hover:text-[#A87963]"
               >
                 <ArrowLeft size={16} />
                 BACK
@@ -471,7 +518,7 @@ export default function BookingWizard() {
             ) : (
               <Link
                 href="/"
-                className="text-xs tracking-[0.15em] text-[#777066] hover:text-[#c6a66b]"
+                className="text-xs tracking-[0.15em] text-[#82796E] transition hover:text-[#A87963]"
               >
                 CANCEL
               </Link>
@@ -482,7 +529,7 @@ export default function BookingWizard() {
                 type="button"
                 onClick={nextStep}
                 disabled={!canContinue()}
-                className="flex items-center gap-3 bg-[#211D19] px-7 py-4 text-xs tracking-[0.2em] text-white transition hover:bg-[#c6a66b] disabled:cursor-not-allowed disabled:opacity-40"
+                className="flex items-center gap-3 bg-[#211D19] px-7 py-4 text-xs tracking-[0.2em] text-[#F1EBDD] transition hover:bg-[#A87963] disabled:cursor-not-allowed disabled:opacity-40"
               >
                 CONTINUE
                 <ArrowRight size={16} />
@@ -491,7 +538,7 @@ export default function BookingWizard() {
               <button
                 type="button"
                 onClick={submitBooking}
-                className="bg-[#211D19] px-7 py-4 text-xs tracking-[0.2em] text-white transition hover:bg-[#c6a66b]"
+                className="bg-[#211D19] px-7 py-4 text-xs tracking-[0.2em] text-[#F1EBDD] transition hover:bg-[#A87963]"
               >
                 SUBMIT REQUEST
               </button>
@@ -499,7 +546,7 @@ export default function BookingWizard() {
           </div>
         </div>
 
-        <p className="mt-6 text-center text-xs text-[#9a9388]">
+        <p className="mt-6 text-center text-xs leading-6 text-[#C6B9A7]">
           By continuing, you acknowledge that this is a frontend demo booking
           experience.
         </p>
