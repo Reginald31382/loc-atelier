@@ -5,26 +5,38 @@ import Link from "next/link";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 
 const links = [
-  { name: "Home", href: "/#home" },
-  { name: "Our Story", href: "/#about" },
-  { name: "Services", href: "/#services" },
-  { name: "Gallery", href: "/#gallery" },
-  { name: "Reviews", href: "/#testimonials" },
+  { name: "Home", id: "home" },
+  { name: "Our Story", id: "about" },
+  { name: "Services", id: "services" },
+  { name: "Gallery", id: "gallery" },
+  { name: "Reviews", id: "testimonials" },
 ];
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const closeMenu = () => setMenuOpen(false);
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+
+    setMenuOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#C6A66B]/25 bg-[#211D19]/95 shadow-lg shadow-black/10 backdrop-blur-xl">
       <nav className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-5 py-4 sm:px-8 md:px-12 lg:py-5">
         {/* BRAND */}
-        <Link
-          href="/#home"
-          onClick={closeMenu}
-          className="group flex min-w-0 flex-col"
+        <button
+          type="button"
+          onClick={() => scrollToSection("home")}
+          className="group flex min-w-0 flex-col text-left"
+          aria-label="Return to homepage"
         >
           <span className="whitespace-nowrap font-serif text-xl tracking-[0.04em] text-[#F1EBDD] transition group-hover:text-[#D4B18A] sm:text-2xl md:text-3xl">
             THE LOC <span className="italic text-[#B89A70]">ATELIER</span>
@@ -33,18 +45,19 @@ export default function Navbar() {
           <span className="mt-1 text-[7px] tracking-[0.3em] text-[#C6B9A7] sm:text-[8px] sm:tracking-[0.42em]">
             THE ART OF LOC CARE
           </span>
-        </Link>
+        </button>
 
         {/* DESKTOP NAVIGATION */}
         <div className="hidden items-center gap-6 lg:flex xl:gap-9">
           {links.map((link) => (
-            <Link
+            <button
               key={link.name}
-              href={link.href}
+              type="button"
+              onClick={() => scrollToSection(link.id)}
               className="relative py-2 text-[10px] tracking-[0.17em] text-[#E4D9C9] transition hover:text-[#D4B18A] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#C6A66B] after:transition-all hover:after:w-full"
             >
               {link.name.toUpperCase()}
-            </Link>
+            </button>
           ))}
         </div>
 
@@ -79,6 +92,7 @@ export default function Navbar() {
             : "pointer-events-none max-h-0 border-transparent opacity-0"
         }`}
         aria-hidden={!menuOpen}
+        inert={!menuOpen}
       >
         <div className="px-6 py-7 sm:px-9">
           <p className="mb-5 text-[9px] tracking-[0.35em] text-[#C6A66B]">
@@ -87,25 +101,25 @@ export default function Navbar() {
 
           <div className="flex flex-col">
             {links.map((link, index) => (
-              <Link
+              <button
                 key={link.name}
-                href={link.href}
-                onClick={closeMenu}
+                type="button"
+                onClick={() => scrollToSection(link.id)}
                 tabIndex={menuOpen ? 0 : -1}
-                className="flex items-center justify-between border-b border-white/10 py-4 font-serif text-xl text-[#F1EBDD] transition hover:pl-2 hover:text-[#D4B18A]"
+                className="flex items-center justify-between border-b border-white/10 py-4 text-left font-serif text-xl text-[#F1EBDD] transition hover:pl-2 hover:text-[#D4B18A]"
               >
                 {link.name}
 
                 <span className="text-[10px] tracking-widest text-[#C6A66B]">
                   0{index + 1}
                 </span>
-              </Link>
+              </button>
             ))}
           </div>
 
           <Link
             href="/booking"
-            onClick={closeMenu}
+            onClick={() => setMenuOpen(false)}
             tabIndex={menuOpen ? 0 : -1}
             className="mt-7 flex items-center justify-center gap-3 bg-[#B89A70] px-6 py-4 text-[10px] font-semibold tracking-[0.2em] text-[#211D19] transition hover:bg-[#F1EBDD]"
           >
